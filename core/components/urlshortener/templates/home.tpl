@@ -1,1 +1,1 @@
-<div id="bxrextra-panel-home-div"></div>
+<div id="urlshortener-panel-home-div"></div>
