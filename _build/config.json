@@ -1,0 +1,22 @@
+{
+    "name": "UrlShortener"
+    ,"lowCaseName": "urlshortener"
+    ,"description": "Shorten URL with your MODx"
+    ,"author": "Jan Peca (TheBoxer)"
+    ,"version": "0.1"
+    ,"package":{
+        "actions": [{
+            "id": 1
+            ,"controller": "index"
+            ,"langTopics": "urlshortener:default"
+        }]
+        ,"menus": [{
+            "text": "urlshortener"
+            ,"description": "urlshortener.menu_desc"
+            ,"action": 1
+        }]
+    }
+    ,"database": {
+        "tables": ["UrlShortenerItem"]
+    }
+}
