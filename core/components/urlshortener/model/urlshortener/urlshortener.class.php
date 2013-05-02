@@ -12,6 +12,8 @@ class UrlShortener {
     /** @var array $chunks */
     public $chunks = array();
 
+    private $alphabet = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
     function __construct(modX &$modx,array $config = array()) {
         $this->modx =& $modx;
 
@@ -87,4 +89,32 @@ class UrlShortener {
         }
         return $chunk;
     }
+
+    public function encodeId($id){
+        $base  = strlen($this->alphabet);
+
+        $out = "";
+        for ($t = floor(log10($id) / log10($base)); $t >= 0; $t--) {
+            $a   = floor($id / pow($base, $t));
+            $out = $out . substr($this->alphabet, $a, 1);
+            $id  = $id - ($a * bcpow($base, $t));
+        }
+
+        return strrev($out);
+    }
+
+    public function decodeHash($hash){
+        $base  = strlen($this->alphabet);
+
+        $hash  = strrev($hash);
+        $out = 0;
+        $len = strlen($hash) - 1;
+        for ($t = 0; $t <= $len; $t++) {
+            $bcpow = pow($base, $len - $t);
+            $out   = $out + strpos($this->alphabet, substr($hash, $t, 1)) * $bcpow;
+        }
+
+        return $out;
+    }
+
 }

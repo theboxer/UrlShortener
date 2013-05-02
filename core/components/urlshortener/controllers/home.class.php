@@ -11,7 +11,6 @@ class UrlShortenerHomeManagerController extends UrlShortenerBaseManagerControlle
     }
     public function getPageTitle() { return $this->modx->lexicon('urlshortener'); }
     public function loadCustomCssJs() {
-        $this->addJavascript($this->urlshortener->config['jsUrl'].'mgr/extra/griddraganddrop.js');
         $this->addJavascript($this->urlshortener->config['jsUrl'].'mgr/widgets/items.grid.js');
         $this->addJavascript($this->urlshortener->config['jsUrl'].'mgr/widgets/home.panel.js');
         $this->addLastJavascript($this->urlshortener->config['jsUrl'].'mgr/sections/home.js');

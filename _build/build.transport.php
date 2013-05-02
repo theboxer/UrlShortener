@@ -34,8 +34,8 @@ set_time_limit(0);
 /* define package */
 define('PKG_NAME','UrlShortener');
 define('PKG_NAME_LOWER',strtolower(PKG_NAME));
-define('PKG_VERSION','1.0.0');
-define('PKG_RELEASE','pl');
+define('PKG_VERSION','0.0.1');
+define('PKG_RELEASE','alpha');
 
 /* define sources */
 $root = dirname(dirname(__FILE__)).'/';
@@ -183,6 +183,29 @@ if (empty($menu)) {
     $modx->log(modX::LOG_LEVEL_INFO,'Packaged in menu.');
 }
 unset($vehicle,$menu);
+
+/* add plugins */
+$plugins = include $sources['data'].'transport.plugins.php';
+if (!is_array($plugins)) { $modx->log(modX::LOG_LEVEL_FATAL,'Adding plugins failed.'); }
+$attributes= array(
+    xPDOTransport::UNIQUE_KEY => 'name',
+    xPDOTransport::PRESERVE_KEYS => false,
+    xPDOTransport::UPDATE_OBJECT => true,
+    xPDOTransport::RELATED_OBJECTS => true,
+    xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
+        'PluginEvents' => array(
+            xPDOTransport::PRESERVE_KEYS => true,
+            xPDOTransport::UPDATE_OBJECT => false,
+            xPDOTransport::UNIQUE_KEY => array('pluginid','event'),
+        ),
+    ),
+);
+foreach ($plugins as $plugin) {
+    $vehicle = $builder->createVehicle($plugin, $attributes);
+    $builder->putVehicle($vehicle);
+}
+$modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($plugins).' plugins.'); flush();
+unset($plugins,$plugin,$attributes);
 
 /* now pack in the license file, readme and setup options */
 $builder->setPackageAttributes(array(

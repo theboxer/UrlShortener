@@ -11,22 +11,29 @@ class UrlShortenerCreateProcessor extends modObjectCreateProcessor {
     public $objectType = 'urlshortener.items';
 
     public function beforeSet(){
-        $items = $this->modx->getCollection($this->classKey);
+        $url = $this->getProperty('url');
 
-        $this->setProperty('position', count($items));
+        if (empty($url)) {
+            $this->addFieldError('url',$this->modx->lexicon('urlshortener.item_err_ns_url'));
+        } else if ($this->doesAlreadyExist(array('url' => $url))) {
+            $this->addFieldError('url',$this->modx->lexicon('urlshortener.item_err_ae'));
+        }
 
         return parent::beforeSet();
     }
 
-    public function beforeSave() {
-        $name = $this->getProperty('name');
+    public function afterSave(){
+        $urlShortener = new UrlShortener($this->modx);
 
-        if (empty($name)) {
-            $this->addFieldError('name',$this->modx->lexicon('urlshortener.item_err_ns_name'));
-        } else if ($this->doesAlreadyExist(array('name' => $name))) {
-            $this->addFieldError('name',$this->modx->lexicon('urlshortener.item_err_ae'));
-        }
-        return parent::beforeSave();
+        $short = $urlShortener->encodeId($this->object->id);
+
+        $siteUrl = $this->modx->getOption('site_url');
+
+        $this->object->set('short', $siteUrl.$short);
+        $this->object->save();
+
+        return parent::afterSave();
     }
+
 }
 return 'UrlShortenerCreateProcessor';

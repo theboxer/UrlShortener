@@ -17,9 +17,8 @@ $xpdo_meta_map['UrlShortenerItem']= array (
   array (
     'url' => 
     array (
-      'dbtype' => 'varchar',
-      'precision' => '255',
-      'phptype' => 'string',
+      'dbtype' => 'text',
+      'phptype' => 'text',
       'null' => false,
     ),
     'short' => 
@@ -28,6 +27,7 @@ $xpdo_meta_map['UrlShortenerItem']= array (
       'precision' => '32',
       'phptype' => 'string',
       'null' => false,
+      'default' => '',
     ),
     'clicks' => 
     array (
@@ -35,6 +35,7 @@ $xpdo_meta_map['UrlShortenerItem']= array (
       'precision' => '16',
       'phptype' => 'integer',
       'null' => false,
+      'default' => 0,
     ),
   ),
 );

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model package="urlshortener" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="urlshortener">
     <object class="UrlShortenerItem" table="urlshortener_items" extends="xPDOSimpleObject">
-        <field key="url" dbtype="varchar" precision="255" phptype="string" null="false" />
-        <field key="short" dbtype="varchar" precision="32" phptype="string" null="false" />
-        <field key="clicks" dbtype="int" precision="16" phptype="integer" null="false"/>
+        <field key="url" dbtype="text" phptype="text" null="false" />
+        <field key="short" dbtype="varchar" precision="32" phptype="string" null="false" default="" />
+        <field key="clicks" dbtype="int" precision="16" phptype="integer" null="false" default="0"/>
     </object>    
 </model>

@@ -3,32 +3,31 @@ UrlShortener.grid.Items = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         id: 'urlshortener-grid-items'
-        ,url: UrlShortener.config.connector_url
+        ,url: UrlShortener.config.connectorUrl
         ,baseParams: {
             action: 'mgr/item/getlist'
         }
-        ,save_action: 'mgr/item/updatefromgrid'
-        ,autosave: true
-        ,fields: ['id','name','description']
+        ,fields: ['id','url','short', 'clicks']
         ,autoHeight: true
         ,paging: true
         ,remoteSort: true
-        ,ddGroup: 'urlshortenerItemDDGroup'
-        ,enableDragDrop: true
         ,columns: [{
             header: _('id')
             ,dataIndex: 'id'
             ,width: 70
+            ,hidden: true
         },{
-            header: _('name')
-            ,dataIndex: 'name'
+            header: _('urlshortener.url')
+            ,dataIndex: 'url'
             ,width: 200
-            ,editor: { xtype: 'textfield' }
         },{
-            header: _('description')
-            ,dataIndex: 'description'
+            header: _('urlshortener.short')
+            ,dataIndex: 'short'
             ,width: 250
-            ,editor: { xtype: 'textfield' }
+        },{
+            header: _('urlshortener.clicks')
+            ,dataIndex: 'clicks'
+            ,width: 250
         }]
         ,tbar: [{
             text: _('urlshortener.item_create')
@@ -37,7 +36,7 @@ UrlShortener.grid.Items = function(config) {
         },'->',{
             xtype: 'textfield'
             ,id: 'urlshortener-search-filter'
-            ,emptyText: _('urlshortener.search...')
+            ,emptyText: _('urlshortener.search') + '...'
             ,listeners: {
                 'change': {fn:this.search,scope:this}
                 ,'render': {fn: function(cmp) {
@@ -53,45 +52,6 @@ UrlShortener.grid.Items = function(config) {
                 },scope:this}
             }
         }]
-        ,listeners: {
-            'render': function(g) {
-                var ddrow = new Ext.ux.dd.GridReorderDropTarget(g, {
-                    copy: false
-                    ,listeners: {
-                        'beforerowmove': function(objThis, oldIndex, newIndex, records) {
-                        }
-
-                        ,'afterrowmove': function(objThis, oldIndex, newIndex, records) {
-
-                            MODx.Ajax.request({
-                                url: UrlShortener.config.connectorUrl
-                                ,params: {
-                                    action: 'mgr/item/reorder'
-                                    ,idItem: records.pop().id
-                                    ,oldIndex: oldIndex
-                                    ,newIndex: newIndex
-                                }
-                                ,listeners: {
-
-                                }
-                            });
-                        }
-
-                        ,'beforerowcopy': function(objThis, oldIndex, newIndex, records) {
-                        }
-
-                        ,'afterrowcopy': function(objThis, oldIndex, newIndex, records) {
-                        }
-                    }
-                });
-
-                Ext.dd.ScrollManager.register(g.getView().getEditorParent());
-            }
-            ,beforedestroy: function(g) {
-                Ext.dd.ScrollManager.unregister(g.getView().getEditorParent());
-            }
-
-        }
     });
     UrlShortener.grid.Items.superclass.constructor.call(this,config);
 };
@@ -100,11 +60,6 @@ Ext.extend(UrlShortener.grid.Items,MODx.grid.Grid,{
 
     ,getMenu: function() {
         var m = [];
-        m.push({
-            text: _('urlshortener.item_update')
-            ,handler: this.updateItem
-        });
-        m.push('-');
         m.push({
             text: _('urlshortener.item_remove')
             ,handler: this.removeItem
@@ -129,11 +84,6 @@ Ext.extend(UrlShortener.grid.Items,MODx.grid.Grid,{
         }else{
             r = {};
         }
-
-
-
-
-
         this.windows.createUpdateItem = MODx.load({
             xtype: 'urlshortener-window-item-create-update'
             ,isUpdate: isUpdate
@@ -172,22 +122,18 @@ Ext.extend(UrlShortener.grid.Items,MODx.grid.Grid,{
         this.getBottomToolbar().changePage(1);
         this.refresh();
     }
-
-    ,getDragDropText: function(){
-        return this.selModel.selections.items[0].data.name;
-    }
 });
 Ext.reg('urlshortener-grid-items',UrlShortener.grid.Items);
 
 UrlShortener.window.CreateUpdateItem = function(config) {
     config = config || {};
-    this.ident = config.ident || 'urlshortener-mecitem'+Ext.id();
+    this.ident = config.ident || 'urlshortener-window-item-create-update';
     Ext.applyIf(config,{
         id: this.ident
         ,height: 150
         ,width: 475
         ,closeAction: 'close'
-        ,url: UrlShortener.config.connector_url
+        ,url: UrlShortener.config.connectorUrl
         ,action: (config.isUpdate)? 'mgr/item/update' : 'mgr/item/create'
         ,fields: [{
             xtype: 'textfield'
@@ -196,21 +142,10 @@ UrlShortener.window.CreateUpdateItem = function(config) {
             ,hidden: true
         },{
             xtype: 'textfield'
-            ,fieldLabel: _('name')
-            ,name: 'name'
-            ,id: this.ident+'-name'
+            ,fieldLabel: _('urlshortener.url')
+            ,name: 'url'
+            ,id: this.ident+'-url'
             ,anchor: '100%'
-        },{
-            xtype: 'textarea'
-            ,fieldLabel: _('description')
-            ,name: 'description'
-            ,id: this.ident+'-description'
-            ,anchor: '100%'
-        },{
-            xtype: 'textfield'
-            ,name: 'position'
-            ,id: this.ident+'-position'
-            ,hidden: true
         }]
     });
     UrlShortener.window.CreateUpdateItem.superclass.constructor.call(this,config);
