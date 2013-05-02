@@ -15,6 +15,13 @@
             ,"description": "urlshortener.menu_desc"
             ,"action": 1
         }]
+        ,"elements": {
+            "plugins": [{
+                "name": "UrlShortener"
+                ,"file": "plugin.urlshortener"
+                ,"events": ["OnPageNotFound"]
+            }]
+        }
     }
     ,"database": {
         "tables": ["UrlShortenerItem"]
