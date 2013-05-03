@@ -15,7 +15,7 @@ $plugins[0] = $modx->newObject('modPlugin');
 $plugins[0]->set('id',1);
 $plugins[0]->set('name','UrlShortener');
 $plugins[0]->set('description','Handles shortened URL and redirect them to original.');
-$plugins[0]->set('plugincode', getSnippetContent($sources['plugins'] . 'plugin.urlshortener.php'));
+$plugins[0]->set('plugincode', getSnippetContent($sources['plugins'] . 'urlshortener.plugin.php'));
 $plugins[0]->set('category', 0);
 
 $events = array();
