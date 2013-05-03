@@ -18,7 +18,6 @@
         ,"elements": {
             "plugins": [{
                 "name": "UrlShortener"
-                ,"file": "plugin.urlshortener"
                 ,"events": ["OnPageNotFound"]
             }]
         }
