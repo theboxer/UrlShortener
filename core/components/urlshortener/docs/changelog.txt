@@ -1,9 +1,5 @@
 Changelog for UrlShortener.
 
-UrlShortener 0.0.2
-==============
-- Added ability to sort grid by drag and drop.
-
-UrlShortener 0.0.1
+UrlShortener 1.0.0
 ==============
 - Initial release.

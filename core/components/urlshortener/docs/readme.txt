@@ -1,11 +1,11 @@
 --------------------
 UrlShortener
 --------------------
-Version: 0.0.2
+Version: 1.0.0
 Author: Jan Peca <pecajan@gmail.com>
 --------------------
 
-A basic Extra for MODx Revolution.
+UrlShortener for MODx Revolution. Now you can shorten URLs on your domain right in MODx.
 
 Feel free to suggest ideas/improvements/bugs on GitHub:
 http://github.com/theboxer/UrlShortener/issues
