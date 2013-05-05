@@ -3,7 +3,7 @@
     ,"lowCaseName": "urlshortener"
     ,"description": "Shorten URL with your MODx"
     ,"author": "Jan Peca (TheBoxer)"
-    ,"version": "0.0.1"
+    ,"version": "1.0.1"
     ,"package":{
         "actions": [{
             "id": 1

@@ -27,6 +27,17 @@ class UrlShortenerCreateProcessor extends modObjectCreateProcessor {
 
         $short = $urlShortener->encodeId($this->object->id);
 
+        while($this->modx->getObject('modResource', array('alias' => $short))){
+            $newObject = $this->modx->newObject('UrlShortenerItem');
+            $newObject->set('url', $this->object->url);
+            $newObject->save();
+            $short = $urlShortener->encodeId($newObject->id, true);
+            $newObject->set('short', $short);
+            $newObject->save();
+            $this->object->remove();
+            $this->object = $newObject;
+        }
+
         $siteUrl = $this->modx->getOption('site_url');
 
         $this->object->set('short', $siteUrl.$short);
