@@ -1,5 +1,9 @@
 Changelog for UrlShortener.
 
+UrlShortener 1.0.1
+==============
+- When hashing URL's ID, check if already exists resource with this alias
+
 UrlShortener 1.0.0
 ==============
 - Initial release.
