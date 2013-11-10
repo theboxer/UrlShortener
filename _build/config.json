@@ -3,7 +3,7 @@
     ,"lowCaseName": "urlshortener"
     ,"description": "Shorten URL with your MODx"
     ,"author": "Jan Peca (TheBoxer)"
-    ,"version": "1.0.2"
+    ,"version": "1.0.3"
     ,"package":{
         "actions": [{
             "id": 1
@@ -19,6 +19,9 @@
             "plugins": [{
                 "name": "UrlShortener"
                 ,"events": ["OnPageNotFound"]
+            }]
+            ,"snippets": [{
+                "name": "UrlShortener"
             }]
         }
     }

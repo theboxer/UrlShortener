@@ -1,11 +1,5 @@
 <?php
 require_once dirname(__FILE__) . '/model/urlshortener/urlshortener.class.php';
-/**
- * @package urlshortener
- */
-class IndexManagerController extends UrlShortenerBaseManagerController {
-    public static function getDefaultController() { return 'home'; }
-}
 
 abstract class UrlShortenerBaseManagerController extends modExtraManagerController {
     /** @var UrlShortener $urlshortener */
@@ -27,4 +21,11 @@ abstract class UrlShortenerBaseManagerController extends modExtraManagerControll
         return array('urlshortener:default');
     }
     public function checkPermissions() { return true;}
+}
+
+/**
+ * @package urlshortener
+ */
+class IndexManagerController extends UrlShortenerBaseManagerController {
+    public static function getDefaultController() { return 'home'; }
 }
