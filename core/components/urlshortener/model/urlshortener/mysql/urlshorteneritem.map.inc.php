@@ -18,13 +18,13 @@ $xpdo_meta_map['UrlShortenerItem']= array (
     'url' => 
     array (
       'dbtype' => 'text',
-      'phptype' => 'text',
+      'phptype' => 'string',
       'null' => false,
     ),
     'short' => 
     array (
       'dbtype' => 'text',
-      'phptype' => 'text',
+      'phptype' => 'string',
       'null' => false,
       'default' => '',
     ),
